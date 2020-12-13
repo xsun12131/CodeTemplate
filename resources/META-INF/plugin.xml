@@ -1,0 +1,33 @@
+<idea-plugin>
+    <id>org.example.CodeTemplate</id>
+    <name>TemplateCode</name>
+    <vendor email="support@yourcompanye.com" url="http://www.yourcompanye.com">YourCompanye</vendor>
+
+    <description>Generate code by object.ddddddddddddddddddd</description>
+
+    <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="TemplateCode" text="Template Code"
+               popup="true" icon="/icons/halo.png">
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="after" relative-to-action="ReplaceInPath"/>
+        </group>
+
+        <!-- 创建TemplateCode -->
+        <action class="com.fatpanda.idea.right.GenerateAction"
+                id="template.code.class" description="TemplateCode"
+                icon="/icons/right/HaloBasic.png"
+                text="Generate Code">
+            <add-to-group group-id="TemplateCode"/>
+        </action>
+    </actions>
+</idea-plugin>

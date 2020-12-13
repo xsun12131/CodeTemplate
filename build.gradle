@@ -1,0 +1,50 @@
+buildscript {
+    repositories {
+        maven { url 'http://dl.bintray.com/jetbrains/int/ellij-plugin-service' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter'}
+    }
+}
+
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.6.5'
+}
+
+group 'com.fatpandat.idea'
+version '1.0'
+
+repositories {
+    //使用国内源下载依赖
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.freemarker', name: 'freemarker', version: '2.3.20'
+//    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+//    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'jakarta.persistence', name: 'jakarta.persistence-api', version: '2.2.3'
+}
+
+sourceSets {
+    main {
+        java.srcDirs 'src'
+        resources.srcDirs 'resources'
+    }
+    test {
+        java.srcDirs 'test'
+        resources.srcDirs 'test-resources'
+    }
+}
+
+intellij {
+    version '2020.2.4'  //调试插件IDEA的版本
+    pluginName 'TemplateCode'
+    updateSinceUntilBuild false
+    sandboxDirectory = "${rootProject.projectDir}/idea-sandbox/idea-2020.2.4"
+    plugins 'maven'
+    plugins 'java'
+}
