@@ -65,6 +65,14 @@ public class GenerateUtil {
         return entityMap;
     }
 
+    /**
+     * 生成模板
+     * @param entityMap 属性Map
+     * @param objClass 原对象class
+     * @param type 生成的类型
+     * @return
+     * @throws IOException
+     */
     public static Boolean generateTemplate(Map<String, Object> entityMap, PsiClass objClass, TemplateType type) throws IOException {
 
         Configuration cfg = new Configuration();
@@ -105,6 +113,12 @@ public class GenerateUtil {
         }
     }
 
+    /**
+     * 根据类型生成路径
+     * @param objClass
+     * @param type
+     * @return
+     */
     private static String switchTemplatePath(PsiClass objClass, TemplateType type) {
         String packageName = PsiUtil.getPackageName(objClass);
         String path = PsiUtil.getVirtualFile(objClass.getParent()).getPath();
