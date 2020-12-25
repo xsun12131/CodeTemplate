@@ -49,6 +49,18 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     }
 
     /**
+     * 根据查询条件查询所有${entityName}
+     *
+     * @return
+     */
+    public List<${entityName}> findAll() {
+        Specification<${entityName}> specifications = Specifications.<${entityName}>and()
+                .eq("delFlag", false).build();
+        List<${entityName}> all = ${entityName?uncap_first}Repository.findAll(specifications);
+        return all;
+    }
+
+    /**
      * 根据ids批量删除${entityName}
      *
      * @param ids 要删除的id数组
@@ -57,9 +69,11 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     @Override
     public List<${idType}> delete${entityName?cap_first}Batch(String[] ids) {
         List<${idType}> idList = Arrays.asList(ids);
-        List<${entityName}> linkList = ${entityName?uncap_first}Repository.findByIdInAndDelFlag(idList, false);
+        List<${entityName}> ${entityName?uncap_first}List
+                = ${entityName?uncap_first}Repository.findByIdInAndDelFlag(idList, false);
         ${entityName?uncap_first}Repository.updateDelFlagBatchByIds(idList);
-        List<${idType}> hasIds = linkList.stream().map(${entityName}::get${idName?cap_first}).collect(Collectors.toList());
+        List<${idType}> hasIds
+                = ${entityName?uncap_first}List.stream().map(${entityName}::get${idName?cap_first}).collect(Collectors.toList());
         return hasIds;
     }
 

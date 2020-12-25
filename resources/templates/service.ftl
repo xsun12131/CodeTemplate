@@ -25,6 +25,13 @@ public interface ${entityName}Service {
     Page<${entityName}> findAll(Integer pageNum, Integer pageSize);
 
     /**
+     * 根据查询条件查询所有${entityName}
+     *
+     * @return
+     */
+    List<${entityName}> findAll();
+
+    /**
      * 根据ids批量删除${entityName}
      *
      * @param ids 要删除的id数组
