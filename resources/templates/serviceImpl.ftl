@@ -53,6 +53,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      *
      * @return
      */
+    @Override
     public List<${entityName}> findAll() {
         Specification<${entityName}> specifications = Specifications.<${entityName}>and()
                 .eq("delFlag", false).build();

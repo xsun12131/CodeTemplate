@@ -2,7 +2,6 @@ package com.fatpanda.idea.right.ui;
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.wizard.AbstractWizard;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
@@ -36,9 +35,10 @@ public class ConfigDialog extends AbstractWizard<ModuleWizardStep> {
      */
     @Override
     protected void doOKAction() {
-        ModuleWizardStep step = getCurrentStepObject();
+        ResultDialog step = (ResultDialog) getCurrentStepObject();
         try {
             if (step.validate()) {
+                step.afterOk();
                 super.doOKAction();
             }
         } catch (ConfigurationException e) {

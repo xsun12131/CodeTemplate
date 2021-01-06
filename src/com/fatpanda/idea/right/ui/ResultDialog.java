@@ -2,7 +2,6 @@ package com.fatpanda.idea.right.ui;
 
 import com.fatpanda.idea.right.util.GenerateUtil;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiClass;
 
@@ -13,8 +12,6 @@ import java.util.Map;
 
 public class ResultDialog extends ModuleWizardStep {
     private JPanel contentPane;
-    private JButton buttonOK;
-    private JButton buttonCancel;
     private JTextField classNameValue;
     private JTextField packageNameValue;
     private JCheckBox controllerCheckBox;
@@ -28,7 +25,6 @@ public class ResultDialog extends ModuleWizardStep {
     private JCheckBox suffixShow;
     private JPanel suffixPanel;
 
-    private ConfigData configData = new ConfigData();
     private Project myProject;
     private PsiClass myClass;
     private Map<String, Object> stringObjectMap;
@@ -44,25 +40,25 @@ public class ResultDialog extends ModuleWizardStep {
         controllerCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ConfigData.setSelectController(controllerCheckBox.isSelected());
             }
         });
         serviceCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ConfigData.setSelectedService(serviceCheckBox.isSelected());
             }
         });
         serviceImplCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ConfigData.setSelectedServiceImpl(serviceImplCheckBox.isSelected());
             }
         });
         repositoryCheckBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                ConfigData.setSelectedRepository(repositoryCheckBox.isSelected());
             }
         });
         suffixShow.addActionListener(new ActionListener() {
@@ -75,6 +71,9 @@ public class ResultDialog extends ModuleWizardStep {
                 }
             }
         });
+        packageNameValue.addActionListener(actionListener -> {
+            ConfigData.setPackageName(packageNameValue.getText());
+        });
 
     }
 
@@ -84,13 +83,13 @@ public class ResultDialog extends ModuleWizardStep {
     }
 
     private void initComBox() {
-        stringObjectMap = GenerateUtil.generateProperty(myClass);
+        stringObjectMap = GenerateUtil.getEntityProperty();
         classNameValue.setText(stringObjectMap.get("entityName").toString());
         packageNameValue.setText(stringObjectMap.get("parentPackageName").toString());
-        controllerValue.setText(configData.getControllerSuffix());
-        serviceValue.setText(configData.getServiceSuffix());
-        serviceImplValue.setText(configData.getServiceImplSuffix());
-        repositoryValue.setText(configData.getRepositorySuffix());
+        controllerValue.setText(ConfigData.getControllerSuffix());
+        serviceValue.setText(ConfigData.getServiceSuffix());
+        serviceImplValue.setText(ConfigData.getServiceImplSuffix());
+        repositoryValue.setText(ConfigData.getRepositorySuffix());
         suffixPanel.setVisible(false);
     }
 
@@ -99,4 +98,7 @@ public class ResultDialog extends ModuleWizardStep {
 
     }
 
+    public void afterOk() {
+        ConfigData.setPackageName(packageNameValue.getText());
+    }
 }

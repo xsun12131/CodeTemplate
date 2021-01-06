@@ -1,15 +1,12 @@
 package com.fatpanda.idea.right;
 
+import com.fatpanda.idea.right.ui.ConfigData;
 import com.fatpanda.idea.right.ui.ConfigDialog;
 import com.fatpanda.idea.right.util.GenerateUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataKeys;
 import com.intellij.openapi.actionSystem.LangDataKeys;
-import com.intellij.openapi.module.Module;
-import com.intellij.openapi.module.ModuleUtil;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiFile;
@@ -31,16 +28,55 @@ public class GenerateAction extends AnAction {
         PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
         //获取Java类的class文件
         PsiClass clazz = PsiTreeUtil.findChildOfAnyType(psiFile, PsiClass.class);
-        Map<String, Object> entityMap = GenerateUtil.generateProperty(clazz);
+        GenerateUtil.generateProperty(clazz);
+
         Project project = e.getProject();
+        ConfigData.clearSet();
         ConfigDialog dialog = new ConfigDialog(project,clazz);
         if (!dialog.showAndGet()) {
             return;
         }
 
+        createTemplate(clazz);
+
         VirtualFileManager manager = VirtualFileManager.getInstance();
         manager.syncRefresh();
 
+    }
 
+    private void createTemplate(PsiClass clazz) {
+        Map<String, Object> entityMap = GenerateUtil.getEntityProperty();
+
+        if(ConfigData.getSelectController()) {
+            try {
+                GenerateUtil.generateTemplate(clazz, TemplateType.CONTROLLER);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+
+        if(ConfigData.getSelectedService()) {
+            try {
+                GenerateUtil.generateTemplate(clazz, TemplateType.SERVICE);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+
+        if(ConfigData.getSelectedServiceImpl()) {
+            try {
+                GenerateUtil.generateTemplate(clazz, TemplateType.SERVICEIMPL);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
+
+        if(ConfigData.getSelectedRepository()) {
+            try {
+                GenerateUtil.generateTemplate(clazz, TemplateType.REPOSITORY);
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        }
     }
 }
