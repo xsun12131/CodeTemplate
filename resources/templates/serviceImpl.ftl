@@ -25,7 +25,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      * 新增${entityName}
      *
      * @param ${entityName?uncap_first} ${entityName?uncap_first}
-     * @return
+     * @return ${entityName}
      */
     @Override
     public ${entityName} save(${entityName} ${entityName?uncap_first}) {
@@ -37,7 +37,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      *
      * @param pageNum  页码
      * @param pageSize 每页数量
-     * @return
+     * @return 分页查询结果
      */
     @Override
     public Page<${entityName}> findAll(Integer pageNum, Integer pageSize) {
@@ -51,7 +51,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     /**
      * 根据查询条件查询所有${entityName}
      *
-     * @return
+     * @return 所有结果
      */
     @Override
     public List<${entityName}> findAll() {

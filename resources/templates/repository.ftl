@@ -17,7 +17,7 @@ public interface ${entityName}Repository extends JpaRepository<${entityName}, ${
 
     /**
      * 查找未删除的所有${entityName}
-     * @return
+     * @return ${entityName}
      */
     @Override
     @Query("select ${entityNameFirstAlphabet} from ${entityName} ${entityNameFirstAlphabet} where ${entityNameFirstAlphabet}.delFlag = false")
@@ -36,7 +36,7 @@ public interface ${entityName}Repository extends JpaRepository<${entityName}, ${
      * 根据idList和删除标识查询${entityName}
      * @param idList 要查询的id列表
      * @param flag 删除标识
-     * @return
+     * @return ${entityName}List
      */
     List<${entityName}> findByIdInAndDelFlag(List<${idType}> idList, boolean flag);
 }

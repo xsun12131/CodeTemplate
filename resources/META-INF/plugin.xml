@@ -3,7 +3,7 @@
     <name>TemplateCode</name>
     <vendor email="support@yourcompanye.com" url="http://www.yourcompanye.com">YourCompanye</vendor>
 
-    <description>Generate code by object.ddddddddddddddddddd</description>
+    <description>Generate code by object. object must have @Id</description>
 
     <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
