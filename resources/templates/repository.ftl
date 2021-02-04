@@ -16,27 +16,16 @@ import java.util.List;
 public interface ${entityName}Repository extends JpaRepository<${entityName}, ${idType}>, JpaSpecificationExecutor {
 
     /**
-     * 查找未删除的所有${entityName}
-     * @return ${entityName}
-     */
-    @Override
-    @Query("select ${entityNameFirstAlphabet} from ${entityName} ${entityNameFirstAlphabet} where ${entityNameFirstAlphabet}.delFlag = false")
-    Page<${entityName}> findAll(Pageable pageable);
-
-    /**
      * 批量删除User及更新删除标识
      * @param idList idList
      */
-    @Modifying
     @Transactional(rollbackOn = Exception.class)
-    @Query("update ${entityName} ${entityNameFirstAlphabet} set ${entityNameFirstAlphabet}.delFlag = true where ${entityNameFirstAlphabet}.${idName} in (?1)")
-    void updateDelFlagBatchByIds(List<${idType}> idList);
+    void deleteByIdIn(List<${idType}> idList);
 
     /**
      * 根据idList和删除标识查询${entityName}
      * @param idList 要查询的id列表
-     * @param flag 删除标识
      * @return ${entityName}List
      */
-    List<${entityName}> findByIdInAndDelFlag(List<${idType}> idList, boolean flag);
+    List<${entityName}> findByIdIn(List<${idType}> idList);
 }

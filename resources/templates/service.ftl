@@ -8,7 +8,7 @@ import java.util.List;
 public interface ${entityName}Service {
 
     /**
-     * 新增${entityName}
+     * 新增或修改${entityName}
      *
      * @param ${entityName?uncap_first} ${entityName?uncap_first}
      * @return ${entityName}

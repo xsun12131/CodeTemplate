@@ -21,7 +21,7 @@ public class ${entityName?cap_first}Controller {
     private ${entityName?cap_first}Service ${entityName?uncap_first}Service;
 
     @PostMapping()
-    @ApiOperation("新增")
+    @ApiOperation("新增或修改")
     public ${entityName} save(@RequestBody ${entityName} ${entityName?uncap_first}) {
         return ${entityName?uncap_first}Service.save(${entityName?uncap_first});
     }

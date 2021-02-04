@@ -22,7 +22,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     private ${entityName}Repository ${entityName?uncap_first}Repository;
 
     /**
-     * 新增${entityName}
+     * 新增或修改${entityName}
      *
      * @param ${entityName?uncap_first} ${entityName?uncap_first}
      * @return ${entityName}
@@ -41,8 +41,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      */
     @Override
     public Page<${entityName}> findAll(Integer pageNum, Integer pageSize) {
-        Specification<${entityName}> specifications = Specifications.<${entityName}>and()
-                .eq("delFlag", false).build();
+        Specification<${entityName}> specifications = Specifications.<${entityName}>and().build();
         Pageable pageable = PageRequest.of(pageNum, pageSize);
         Page<${entityName}> all = ${entityName?uncap_first}Repository.findAll(specifications, pageable);
         return all;
@@ -55,9 +54,7 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
      */
     @Override
     public List<${entityName}> findAll() {
-        Specification<${entityName}> specifications = Specifications.<${entityName}>and()
-                .eq("delFlag", false).build();
-        List<${entityName}> all = ${entityName?uncap_first}Repository.findAll(specifications);
+        List<${entityName}> all = ${entityName?uncap_first}Repository.findAll();
         return all;
     }
 
@@ -71,8 +68,8 @@ public class ${entityName}ServiceImpl implements ${entityName}Service {
     public List<${idType}> delete${entityName?cap_first}Batch(String[] ids) {
         List<${idType}> idList = Arrays.asList(ids);
         List<${entityName}> ${entityName?uncap_first}List
-                = ${entityName?uncap_first}Repository.findByIdInAndDelFlag(idList, false);
-        ${entityName?uncap_first}Repository.updateDelFlagBatchByIds(idList);
+                = ${entityName?uncap_first}Repository.findByIdIn(idList);
+        ${entityName?uncap_first}Repository.deleteByIdIn(idList);
         List<${idType}> hasIds
                 = ${entityName?uncap_first}List.stream().map(${entityName}::get${idName?cap_first}).collect(Collectors.toList());
         return hasIds;
