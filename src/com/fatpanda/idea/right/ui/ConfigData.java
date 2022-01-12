@@ -35,6 +35,8 @@ public class ConfigData {
         ConfigData.setSelectedRepository(false);
     }
 
+    private ConfigData() {}
+
     public static void setClassName(String className) {
         ConfigData.className = className;
     }

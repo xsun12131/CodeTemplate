@@ -5,6 +5,7 @@ import com.fatpanda.idea.right.ui.ConfigDialog;
 import com.fatpanda.idea.right.util.GenerateUtil;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFileManager;
@@ -25,7 +26,7 @@ public class GenerateAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent e) {
         // 获取当前编辑的文件, 通过PsiFile可获得PsiClass, PsiField等对象
-        PsiFile psiFile = e.getData(LangDataKeys.PSI_FILE);
+        PsiFile psiFile = e.getData(CommonDataKeys.PSI_FILE);
         //获取Java类的class文件
         PsiClass clazz = PsiTreeUtil.findChildOfAnyType(psiFile, PsiClass.class);
         GenerateUtil.generateProperty(clazz);
@@ -45,9 +46,8 @@ public class GenerateAction extends AnAction {
     }
 
     private void createTemplate(PsiClass clazz) {
-        Map<String, Object> entityMap = GenerateUtil.getEntityProperty();
 
-        if(ConfigData.getSelectController()) {
+        if(Boolean.TRUE.equals(ConfigData.getSelectController())) {
             try {
                 GenerateUtil.generateTemplate(clazz, TemplateType.CONTROLLER);
             } catch (IOException ioException) {
@@ -55,7 +55,7 @@ public class GenerateAction extends AnAction {
             }
         }
 
-        if(ConfigData.getSelectedService()) {
+        if(Boolean.TRUE.equals(ConfigData.getSelectedService())) {
             try {
                 GenerateUtil.generateTemplate(clazz, TemplateType.SERVICE);
             } catch (IOException ioException) {
@@ -63,7 +63,7 @@ public class GenerateAction extends AnAction {
             }
         }
 
-        if(ConfigData.getSelectedServiceImpl()) {
+        if(Boolean.TRUE.equals(ConfigData.getSelectedServiceImpl())) {
             try {
                 GenerateUtil.generateTemplate(clazz, TemplateType.SERVICEIMPL);
             } catch (IOException ioException) {
@@ -71,7 +71,7 @@ public class GenerateAction extends AnAction {
             }
         }
 
-        if(ConfigData.getSelectedRepository()) {
+        if(Boolean.TRUE.equals(ConfigData.getSelectedRepository())) {
             try {
                 GenerateUtil.generateTemplate(clazz, TemplateType.REPOSITORY);
             } catch (IOException ioException) {

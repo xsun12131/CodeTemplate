@@ -25,50 +25,23 @@ public class ResultDialog extends ModuleWizardStep {
     private JCheckBox suffixShow;
     private JPanel suffixPanel;
 
-    private Project myProject;
-    private PsiClass myClass;
-    private Map<String, Object> stringObjectMap;
+    private static Map<String, Object> stringObjectMap;
 
     public ResultDialog(Project project, PsiClass clazz) {
-        myProject = project;
-        myClass = clazz;
         initComBox();
         bind();
     }
 
     private void bind() {
-        controllerCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfigData.setSelectController(controllerCheckBox.isSelected());
-            }
-        });
-        serviceCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfigData.setSelectedService(serviceCheckBox.isSelected());
-            }
-        });
-        serviceImplCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfigData.setSelectedServiceImpl(serviceImplCheckBox.isSelected());
-            }
-        });
-        repositoryCheckBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                ConfigData.setSelectedRepository(repositoryCheckBox.isSelected());
-            }
-        });
-        suffixShow.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if(suffixShow.isSelected()) {
-                    suffixPanel.setVisible(true);
-                } else {
-                    suffixPanel.setVisible(false);
-                }
+        controllerCheckBox.addActionListener(e -> ConfigData.setSelectController(controllerCheckBox.isSelected()));
+        serviceCheckBox.addActionListener(e -> ConfigData.setSelectedService(serviceCheckBox.isSelected()));
+        serviceImplCheckBox.addActionListener(e -> ConfigData.setSelectedServiceImpl(serviceImplCheckBox.isSelected()));
+        repositoryCheckBox.addActionListener(e -> ConfigData.setSelectedRepository(repositoryCheckBox.isSelected()));
+        suffixShow.addActionListener(e -> {
+            if(suffixShow.isSelected()) {
+                suffixPanel.setVisible(true);
+            } else {
+                suffixPanel.setVisible(false);
             }
         });
         packageNameValue.addActionListener(actionListener -> {
